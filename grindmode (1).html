@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GRIND MODE // marwane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    /* Bold, energetic palette */
+    --bg: #0a0a0f;
+    --bg-2: #12121a;
+    --bg-3: #1a1a26;
+    --ink: #ffffff;
+    --ink-dim: #b8b8cc;
+    --ink-faint: #6a6a80;
+    --line: #26263a;
+    --line-bright: #3a3a52;
+
+    /* Neon accents */
+    --lime: #d4ff00;       /* electric yellow-green — dominant */
+    --magenta: #ff2d95;    /* hot pink — gym / 75 hard */
+    --cyan: #00e5ff;       /* electric blue — python */
+    --orange: #ff6a00;     /* fire orange — pentest */
+    --gold: #ffb800;       /* warm gold — english */
+    --red: #ff3355;        /* danger */
+
+    --display: 'Anton', 'Archivo Black', Impact, sans-serif;
+    --heavy: 'Archivo Black', Impact, sans-serif;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --arabic: 'Noto Kufi Arabic', Tahoma, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 20px 28px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(212,255,0,0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255,45,149,0.06), transparent 50%),
+      radial-gradient(ellipse at center, rgba(0,229,255,0.04), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body > * { position: relative; z-index: 1; }
+
+  /* ============ HEADER ============ */
+  header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+    border: 2px solid var(--lime);
+    position: relative;
+    box-shadow: 0 0 40px rgba(212,255,0,0.15), inset 0 0 40px rgba(212,255,0,0.03);
+  }
+  header::before {
+    content: 'GRIND//MODE';
+    position: absolute;
+    top: -10px; left: 24px;
+    background: var(--bg);
+    color: var(--lime);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    padding: 2px 10px;
+  }
+  .brand-block { display: flex; align-items: center; gap: 16px; }
+  .brand-logo {
+    width: 56px; height: 56px;
+    background: var(--lime);
+    color: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display);
+    font-size: 36px;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+  }
+  .brand {
+    font-family: var(--display);
+    font-size: clamp(36px, 4.5vw, 54px);
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .brand .one { color: var(--ink); }
+  .brand .two { color: var(--lime); }
+  .brand small {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    letter-spacing: 0.3em;
+    margin-top: 4px;
+  }
+
+  .center-quote {
+    text-align: center;
+    font-family: var(--display);
+    font-size: clamp(18px, 2.2vw, 28px);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .center-quote .highlight {
+    background: var(--lime);
+    color: var(--bg);
+    padding: 0 8px;
+    display: inline-block;
+    transform: skew(-6deg);
+  }
+  .center-quote small {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--ink-faint);
+    letter-spacing: 0.3em;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    line-height: 1.9;
+  }
+  .header-right b { color: var(--lime); font-weight: 700; }
+  .clock-big {
+    font-family: var(--display);
+    font-size: 32px;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212,255,0,0.1);
+    border: 1px solid var(--lime);
+    padding: 3px 8px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--lime);
+    margin-top: 4px;
+  }
+  .status-pill .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--lime);
+    animation: pulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--lime);
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+  .refresh-line { margin-top: 6px; font-size: 10px; color: var(--ink-faint); }
+  .refresh-line b { color: var(--lime); }
+  .refresh-line button {
+    background: transparent;
+    border: 1px solid var(--line-bright);
+    color: var(--ink-dim);
+    padding: 2px 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: all 0.2s;
+  }
+  .refresh-line button:hover { border-color: var(--lime); color: var(--lime); box-shadow: 0 0 10px rgba(212,255,0,0.3); }
+  #sync-status.synced { color: var(--lime); }
+  #sync-status.syncing { color: var(--cyan); }
+  #sync-status.error { color: var(--red); }
+  #sync-btn.synced { border-color: var(--lime); color: var(--lime); }
+  #notif-btn.enabled { border-color: var(--lime); color: var(--lime); }
+
+  /* Toast notifications */
+  .toast-wrap {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .toast {
+    background: var(--bg-2);
+    border: 2px solid var(--lime);
+    padding: 14px 18px;
+    min-width: 280px;
+    max-width: 340px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 30px rgba(212,255,0,0.2);
+    animation: slideIn 0.3s cubic-bezier(.2,.8,.2,1);
+    pointer-events: auto;
+  }
+  .toast.pink { border-color: var(--magenta); box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 30px rgba(255,45,149,0.2); }
+  .toast.cyan { border-color: var(--cyan); box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 30px rgba(0,229,255,0.2); }
+  .toast-title {
+    font-family: var(--display);
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--lime);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .toast.pink .toast-title { color: var(--magenta); }
+  .toast.cyan .toast-title { color: var(--cyan); }
+  .toast-body {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .toast.closing { animation: slideOut 0.3s forwards; }
+  @keyframes slideOut {
+    to { transform: translateX(120%); opacity: 0; }
+  }
+
+  /* ============ LAYOUT ============ */
+  .grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px)  {
+    .grid { grid-template-columns: 1fr; }
+    body { padding: 12px; }
+    header { grid-template-columns: 1fr; text-align: center; }
+    .header-right, .brand-block { justify-content: center; text-align: center; }
+    .brand-block { flex-direction: column; }
+  }
+
+  /* ============ CARDS ============ */
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--line-bright);
+    padding: 22px;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover { border-color: var(--line-bright); }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--lime);
+  }
+  .card.pink::after { background: var(--magenta); }
+  .card.cyan::after { background: var(--cyan); }
+  .card.orange::after { background: var(--orange); }
+  .card.gold::after { background: var(--gold); }
+  .card.purple::after { background: linear-gradient(90deg, var(--magenta), var(--cyan)); }
+  .card.red::after { background: var(--red); }
+
+  .card h2 {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .card h2 > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .icon {
+    width: 22px; height: 22px;
+    color: var(--lime);
+    stroke-width: 2.5;
+  }
+  .card.pink h2 .icon { color: var(--magenta); }
+  .card.cyan h2 .icon { color: var(--cyan); }
+  .card.orange h2 .icon { color: var(--orange); }
+  .card.gold h2 .icon { color: var(--gold); }
+  .card.purple h2 .icon { color: var(--magenta); }
+  .card.red h2 .icon { color: var(--red); }
+
+  .card h2 .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    background: var(--bg);
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+  }
+  .card.wide { grid-column: 1 / -1; }
+
+  /* ============ GOALS ============ */
+  .goal {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px;
+    margin-bottom: 10px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    transition: all 0.2s;
+    position: relative;
+  }
+  .goal:hover { border-color: var(--line-bright); transform: translateX(2px); }
+  .goal .ico {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid;
+    position: relative;
+  }
+  .goal .ico svg { width: 22px; height: 22px; stroke-width: 2.5; }
+  .goal.english .ico { color: var(--gold); border-color: var(--gold); box-shadow: 0 0 12px rgba(255,184,0,0.2); }
+  .goal.python .ico  { color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 12px rgba(0,229,255,0.2); }
+  .goal.pentest .ico { color: var(--orange); border-color: var(--orange); box-shadow: 0 0 12px rgba(255,106,0,0.2); }
+  .goal.gym .ico     { color: var(--magenta); border-color: var(--magenta); box-shadow: 0 0 12px rgba(255,45,149,0.2); }
+  .goal .info .name {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .goal.english .info .name { color: var(--gold); }
+  .goal.python .info .name  { color: var(--cyan); }
+  .goal.pentest .info .name { color: var(--orange); }
+  .goal.gym .info .name     { color: var(--magenta); }
+  .goal .info .sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 4px;
+  }
+  .goal .controls {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .goal .controls button {
+    background: transparent;
+    border: 1.5px solid var(--line-bright);
+    color: var(--ink);
+    width: 32px; height: 32px;
+    font-family: var(--display);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .goal .controls button:hover { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+  .goal .controls .val {
+    min-width: 78px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .goal .controls .val b {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    display: block;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .goal.english .controls .val b { color: var(--gold); }
+  .goal.python .controls .val b  { color: var(--cyan); }
+  .goal.pentest .controls .val b { color: var(--orange); }
+  .goal.gym .controls .val b     { color: var(--magenta); }
+  .goal .bar {
+    grid-column: 1 / -1;
+    height: 6px;
+    background: var(--bg);
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .goal .bar i {
+    display: block; height: 100%;
+    transition: width 0.5s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+  }
+  .goal .bar i::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  .goal.english .bar i { background: var(--gold); }
+  .goal.python .bar i  { background: var(--cyan); }
+  .goal.pentest .bar i { background: var(--orange); }
+  .goal.gym .bar i     { background: var(--magenta); }
+  .goal.done { border-color: var(--lime); background: linear-gradient(135deg, var(--bg-3), rgba(212,255,0,0.05)); }
+  .goal.done::after {
+    content: '✓ DONE';
+    position: absolute;
+    top: 6px; right: 10px;
+    font-family: var(--display);
+    font-size: 11px;
+    color: var(--lime);
+    letter-spacing: 0.2em;
+  }
+
+  /* ============ POMODORO ============ */
+  .pomo { text-align: center; padding: 8px 0; }
+  .pomo-label {
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--ink-faint);
+  }
+  .pomo-time {
+    font-family: var(--display);
+    font-size: 88px;
+    line-height: 0.9;
+    margin: 12px 0;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 30px rgba(212,255,0,0.2);
+  }
+  .pomo-time.running {
+    color: var(--lime);
+    text-shadow: 0 0 40px rgba(212,255,0,0.6), 0 0 20px rgba(212,255,0,0.4);
+    animation: breathe 2s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+  .pomo-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em;
+    background: var(--bg);
+    border: 1px solid var(--lime);
+    color: var(--lime);
+    text-transform: uppercase;
+  }
+  .pomo-cat { display: flex; gap: 6px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .pomo-cat button {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pomo-cat button:hover { border-color: var(--ink-dim); color: var(--ink); }
+  .pomo-cat button.active { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+  .pomo-btns { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+  .pomo-btns button {
+    background: transparent;
+    border: 2px solid var(--line-bright);
+    color: var(--ink);
+    padding: 10px 18px;
+    font-family: var(--display);
+    font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pomo-btns button:hover { border-color: var(--lime); color: var(--lime); }
+  .pomo-btns button.primary {
+    background: var(--lime);
+    color: var(--bg);
+    border-color: var(--lime);
+    box-shadow: 0 0 20px rgba(212,255,0,0.4);
+  }
+  .pomo-btns button.primary:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+  .pomo-sessions { margin-top: 14px; font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .pomo-sessions b { font-family: var(--display); font-size: 20px; color: var(--lime); }
+
+  /* ============ MUSIC ============ */
+  .music-wrap { padding: 4px 0; }
+  .music-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+  }
+  .music-tab {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--line-bright);
+    color: var(--ink-dim);
+    padding: 8px;
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .music-tab:hover { color: var(--ink); }
+  .music-tab.active {
+    background: var(--magenta);
+    color: var(--ink);
+    border-color: var(--magenta);
+    box-shadow: 0 0 15px rgba(255,45,149,0.3);
+  }
+  .music-display {
+    text-align: center;
+    padding: 16px 0;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    margin-bottom: 14px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .music-visualizer {
+    display: flex;
+    gap: 3px;
+    height: 32px;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
+  .music-visualizer span {
+    width: 5px;
+    background: var(--magenta);
+    border-radius: 1px;
+    height: 20%;
+    transition: height 0.3s;
+  }
+  .music-visualizer.playing span {
+    animation: viz 0.8s ease-in-out infinite;
+  }
+  .music-visualizer.playing span:nth-child(1) { animation-delay: 0.0s; background: var(--magenta); }
+  .music-visualizer.playing span:nth-child(2) { animation-delay: 0.15s; background: var(--cyan); }
+  .music-visualizer.playing span:nth-child(3) { animation-delay: 0.3s;  background: var(--lime); }
+  .music-visualizer.playing span:nth-child(4) { animation-delay: 0.45s; background: var(--gold); }
+  .music-visualizer.playing span:nth-child(5) { animation-delay: 0.6s;  background: var(--orange); }
+  .music-visualizer.playing span:nth-child(6) { animation-delay: 0.45s; background: var(--cyan); }
+  .music-visualizer.playing span:nth-child(7) { animation-delay: 0.3s;  background: var(--magenta); }
+  @keyframes viz {
+    0%, 100% { height: 20%; }
+    50% { height: 100%; }
+  }
+  .music-track {
+    font-family: var(--display);
+    font-size: 18px;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .music-desc {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .music-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .music-controls button {
+    background: transparent;
+    border: 2px solid var(--line-bright);
+    color: var(--ink);
+    padding: 8px 14px;
+    font-family: var(--display);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .music-controls button:hover { border-color: var(--magenta); color: var(--magenta); }
+  .music-controls button.primary {
+    background: var(--magenta);
+    color: var(--ink);
+    border-color: var(--magenta);
+    box-shadow: 0 0 20px rgba(255,45,149,0.4);
+    padding: 8px 24px;
+  }
+  .music-vol {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--ink-dim);
+  }
+  .music-vol input[type=range] {
+    flex: 1;
+    appearance: none;
+    background: var(--bg);
+    height: 4px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+  }
+  .music-vol input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px; height: 14px;
+    background: var(--magenta);
+    border: 2px solid var(--ink);
+    cursor: pointer;
+  }
+  .score-wrap { text-align: center; }
+  .score-label {
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--ink-faint);
+  }
+  .score-big {
+    font-family: var(--display);
+    font-size: 120px;
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    margin: 8px 0;
+    background: linear-gradient(135deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 40px rgba(212,255,0,0.3);
+  }
+  .score-big.danger-score { background: linear-gradient(135deg, var(--red), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .score-big .pct {
+    font-family: var(--sans);
+    font-size: 32px;
+    color: var(--ink-faint);
+    font-weight: 400;
+    -webkit-text-fill-color: var(--ink-faint);
+  }
+  .verdict {
+    margin-top: 12px;
+    padding: 14px;
+    border-left: 4px solid var(--lime);
+    background: rgba(212,255,0,0.05);
+    font-family: var(--display);
+    font-size: 15px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .verdict.good { border-color: var(--lime); background: rgba(212,255,0,0.08); color: var(--lime); }
+  .verdict.bad { border-color: var(--red); background: rgba(255,51,85,0.08); color: var(--red); }
+  .streaks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .streak {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    padding: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .streak::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--magenta);
+  }
+  .streak:last-child::before { background: var(--cyan); }
+  .streak b {
+    display: block;
+    font-family: var(--display);
+    font-size: 36px;
+    color: var(--magenta);
+    line-height: 1;
+  }
+  .streak:last-child b { color: var(--cyan); }
+  .streak span {
+    font-family: var(--mono);
+    font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    display: block; margin-top: 6px;
+  }
+
+  /* ============ CHART ============ */
+  .chart-wrap { position: relative; height: 280px; }
+
+  /* ============ FEEDS ============ */
+  .feed-scroll { max-height: 440px; overflow-y: auto; padding-right: 4px; }
+  .feed-item {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: var(--bg-3);
+    border-left: 3px solid var(--line-bright);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .feed-item:hover { border-left-color: var(--lime); transform: translateX(3px); background: var(--bg-2); }
+  .card.red .feed-item:hover { border-left-color: var(--red); }
+  .card.purple .feed-item:hover { border-left-color: var(--magenta); }
+  .feed-src {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 9px; font-weight: 700;
+    padding: 4px 7px;
+    background: var(--lime);
+    color: var(--bg);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .feed-src.sec { background: var(--red); color: var(--ink); }
+  .feed-src.ar { background: var(--magenta); color: var(--ink); font-family: var(--arabic); font-size: 12px; padding: 3px 8px; }
+  .feed-title {
+    font-size: 13px; line-height: 1.4;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .feed-title a { color: inherit; text-decoration: none; }
+  .feed-item:hover .feed-title a { color: var(--lime); }
+  .card.red .feed-item:hover .feed-title a { color: var(--red); }
+  .card.purple .feed-item:hover .feed-title a { color: var(--magenta); }
+  .feed-title.ar { font-family: var(--arabic); direction: rtl; text-align: right; font-size: 14px; line-height: 1.7; font-weight: 700; }
+  .feed-meta { font-family: var(--mono); font-size: 9px; color: var(--ink-faint); margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .feed-loading, .feed-empty {
+    color: var(--ink-dim); font-size: 12px;
+    padding: 30px 0; text-align: center;
+    font-family: var(--mono); font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+  }
+
+  /* ============ LOG ============ */
+  .log-explain {
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    padding: 10px 12px;
+    background: var(--bg-3);
+    border-left: 3px solid var(--lime);
+  }
+  .log-explain b { color: var(--lime); font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; }
+  .log-explain .ex { display: inline-block; font-family: var(--mono); font-size: 10px; background: var(--bg); padding: 2px 6px; margin: 3px 3px 0 0; border: 1px solid var(--line-bright); }
+  .log-explain .ex.g { border-color: var(--gold); color: var(--gold); }
+  .log-explain .ex.c { border-color: var(--cyan); color: var(--cyan); }
+  .log-explain .ex.o { border-color: var(--orange); color: var(--orange); }
+
+  .log-input { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; margin-bottom: 14px; }
+  .log-input select, .log-input input {
+    background: var(--bg);
+    border: 1px solid var(--line-bright);
+    color: var(--ink);
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .log-input input:focus, .log-input select:focus { outline: 2px solid var(--lime); border-color: var(--lime); }
+  .log-input button {
+    background: var(--lime);
+    color: var(--bg);
+    border: none;
+    padding: 10px 16px;
+    font-family: var(--display);
+    font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .log-input button:hover { background: var(--ink); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+
+  .log-list { max-height: 220px; overflow-y: auto; padding-right: 4px; }
+  .log-entry {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    background: var(--bg-3);
+    font-size: 12px;
+    align-items: center;
+    border-left: 3px solid var(--line);
+    transition: all 0.15s;
+  }
+  .log-entry:hover { border-left-color: var(--lime); }
+  .log-entry time { font-family: var(--mono); color: var(--ink-faint); font-size: 10px; letter-spacing: 0.1em; }
+  .log-entry .cat {
+    font-family: var(--mono);
+    font-size: 9px; font-weight: 700;
+    padding: 3px 7px;
+    text-transform: uppercase; letter-spacing: 0.15em;
+  }
+  .log-entry .cat.english { background: var(--gold); color: var(--bg); }
+  .log-entry .cat.python  { background: var(--cyan); color: var(--bg); }
+  .log-entry .cat.pentest { background: var(--orange); color: var(--bg); }
+  .log-entry .cat.gym     { background: var(--magenta); color: var(--ink); }
+  .log-entry .cat.other   { background: var(--line-bright); color: var(--ink); }
+  .log-entry .note { color: var(--ink); font-weight: 500; }
+  .log-entry .del {
+    background: none; border: 1px solid var(--line);
+    color: var(--ink-faint); cursor: pointer;
+    font-family: var(--mono); font-size: 14px;
+    width: 26px; height: 26px;
+    transition: all 0.15s;
+  }
+  .log-entry .del:hover { color: var(--red); border-color: var(--red); }
+
+  /* ============ 75 HARD ============ */
+  .hard-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--bg-3), rgba(255,45,149,0.05));
+    border: 1px solid var(--line);
+  }
+  .hard-day {
+    font-family: var(--display);
+    font-size: 72px;
+    line-height: 0.85;
+    color: var(--magenta);
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 30px rgba(255,45,149,0.3);
+  }
+  .hard-day small { font-size: 18px; color: var(--ink-faint); font-family: var(--sans); font-weight: 400; }
+  .hard-progress { flex: 1; }
+  .hard-pbar { height: 6px; background: var(--bg); margin-top: 8px; border: 1px solid var(--line); }
+  .hard-pbar i {
+    display: block; height: 100%;
+    background: linear-gradient(90deg, var(--magenta), var(--cyan));
+    transition: width 0.5s;
+    position: relative;
+  }
+  .hard-pbar i::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s linear infinite;
+  }
+  .hard-pbar-label {
+    font-family: var(--mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: right;
+  }
+  .hard-motto {
+    text-align: right;
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--magenta);
+    letter-spacing: 0.05em;
+  }
+
+  .hard-rules-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; margin-bottom: 18px; }
+  @media (max-width: 720px) { .hard-rules-wrap { grid-template-columns: 1fr; } }
+  .hard-rule {
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px;
+    margin-bottom: 6px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .hard-rule:hover { border-color: var(--magenta); transform: translateX(3px); }
+  .hard-check {
+    width: 28px; height: 28px;
+    border: 2px solid var(--line-bright);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-size: 18px;
+    color: var(--bg); flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .hard-rule.done .hard-check {
+    background: var(--magenta);
+    border-color: var(--magenta);
+    box-shadow: 0 0 12px rgba(255,45,149,0.5);
+  }
+  .hard-rule.done .hard-check::after { content: '✓'; }
+  .hard-rule-text {
+    font-family: var(--sans);
+    font-size: 14px; font-weight: 600;
+    line-height: 1.3;
+  }
+  .hard-rule-text small {
+    display: block;
+    font-family: var(--mono);
+    color: var(--ink-faint); font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+    font-weight: 700;
+  }
+  .hard-rule.done .hard-rule-text { color: var(--ink-dim); }
+  .hard-rule.done .hard-rule-text { text-decoration: line-through; text-decoration-color: var(--magenta); }
+
+  .hard-actions { display: flex; gap: 8px; margin-top: 14px; }
+  .hard-actions button {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--line-bright);
+    color: var(--ink-dim);
+    padding: 10px;
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .hard-actions button:hover { border-color: var(--magenta); color: var(--magenta); }
+  .hard-actions button.danger:hover { border-color: var(--red); color: var(--red); }
+
+  .hard-start { text-align: center; padding: 32px 16px; }
+  .hard-start .big-quote {
+    font-family: var(--display);
+    font-size: clamp(28px, 4vw, 42px);
+    color: var(--magenta);
+    line-height: 0.9;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-shadow: 0 0 30px rgba(255,45,149,0.3);
+  }
+  .hard-start p {
+    font-family: var(--sans);
+    color: var(--ink-dim);
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hard-start button {
+    background: var(--magenta);
+    color: var(--ink);
+    border: none;
+    padding: 14px 32px;
+    font-family: var(--display);
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(255,45,149,0.5);
+    transition: all 0.15s;
+  }
+  .hard-start button:hover { transform: translateY(-2px); box-shadow: 0 4px 40px rgba(255,45,149,0.7); }
+
+  .hard-grid {
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    gap: 3px;
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 720px) { .hard-grid { grid-template-columns: repeat(15, 1fr); } }
+  .hard-cell {
+    aspect-ratio: 1;
+    background: var(--line);
+    position: relative;
+    transition: transform 0.15s;
+  }
+  .hard-cell:hover { transform: scale(1.3); z-index: 2; }
+  .hard-cell.done { background: var(--magenta); box-shadow: 0 0 4px rgba(255,45,149,0.6); }
+  .hard-cell.partial { background: rgba(255,45,149,0.4); }
+  .hard-cell.fail { background: var(--red); }
+  .hard-cell.today { outline: 2px solid var(--cyan); outline-offset: 2px; z-index: 1; }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer b { color: var(--lime); }
+  .footer button {
+    background: transparent;
+    border: 1px solid var(--line-bright);
+    color: var(--ink-dim);
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .footer button:hover { border-color: var(--red); color: var(--red); }
+  .footer button.save:hover { border-color: var(--lime); color: var(--lime); }
+
+  /* ============ SCROLLBAR ============ */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--line-bright); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--lime); }
+</style>
+</head>
+<body>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<header>
+  <div class="brand-block">
+    <div class="brand-logo">M</div>
+    <div class="brand">
+      <span class="one">GRIND</span><br>
+      <span class="two">MODE</span>
+      <small>operator · marwane</small>
+    </div>
+  </div>
+
+  <div class="center-quote" id="motto">
+    <span class="highlight">NO DAYS OFF.</span><br>
+    <small>your future is built today · not tomorrow</small>
+  </div>
+
+  <div class="header-right">
+    <div class="clock-big" id="clock-time">00:00:00</div>
+    <div id="date-day">—</div>
+    <div class="status-pill"><span class="dot"></span> LIVE · <span id="day-num">Day 1</span></div>
+    <div class="refresh-line">
+      Feeds in <b id="refresh-countdown">03:00</b>
+      <button id="refresh-now">↻ Now</button>
+    </div>
+    <div class="refresh-line" style="margin-top:6px">
+      <span id="sync-status" style="color:var(--ink-faint)">☁ Not synced</span>
+      <button id="sync-btn">⟲ Sync</button>
+    </div>
+    <div class="refresh-line" style="margin-top:6px">
+      <button id="notif-btn">🔔 Enable notifications</button>
+    </div>
+  </div>
+</header>
+
+<div class="grid">
+
+  <!-- GOALS -->
+  <section class="card" style="grid-row: span 2;">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        Today's Mission
+      </span>
+      <span class="tag" id="goals-status">0/4</span>
+    </h2>
+    <div id="goals"></div>
+  </section>
+
+  <!-- FOCUS MUSIC -->
+  <section class="card purple">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Focus Zone
+      </span>
+      <span class="tag" id="music-state">PAUSED</span>
+    </h2>
+    <div class="music-wrap">
+      <div class="music-tabs">
+        <button class="music-tab active" data-mood="lofi">LO-FI</button>
+        <button class="music-tab" data-mood="binaural">BINAURAL</button>
+        <button class="music-tab" data-mood="nature">NATURE</button>
+      </div>
+      <div class="music-display">
+        <div class="music-visualizer" id="music-viz">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="music-track" id="music-track">CHILLED · COSMIC</div>
+        <div class="music-desc" id="music-desc">Lo-fi beats for deep work sessions</div>
+      </div>
+      <div class="music-controls">
+        <button id="music-prev">⏮</button>
+        <button id="music-play" class="primary">▶ PLAY</button>
+        <button id="music-next">⏭</button>
+      </div>
+      <div class="music-vol">
+        <span>🔈</span>
+        <input type="range" id="music-vol" min="0" max="100" value="50">
+        <span>🔊</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- POMODORO stays; insertion above -->
+  <section class="card cyan">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3L2 6"/><path d="M22 6l-3-3"/></svg>
+        Deep Work
+      </span>
+      <span class="tag" id="pomo-state">IDLE</span>
+    </h2>
+    <div class="pomo">
+      <div class="pomo-label">lock in · focus</div>
+      <div class="pomo-time" id="pomo-time">25:00</div>
+      <div class="pomo-tag" id="pomo-tag">25 MIN · ENGLISH</div>
+      <div class="pomo-cat">
+        <button data-cat="english" class="active">English</button>
+        <button data-cat="python">Python</button>
+        <button data-cat="pentest">Pentest</button>
+        <button data-cat="gym">Gym</button>
+        <button data-cat="other">Other</button>
+      </div>
+      <div class="pomo-btns">
+        <button id="pomo-start" class="primary">▶ START</button>
+        <button id="pomo-reset">↺ Reset</button>
+        <button id="pomo-mode">25/5</button>
+      </div>
+      <div class="pomo-sessions">SESSIONS DONE: <b id="pomo-count">0</b></div>
+    </div>
+  </section>
+
+  <!-- SCORE -->
+  <section class="card">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Live Score
+      </span>
+      <span class="tag">realtime</span>
+    </h2>
+    <div class="score-wrap">
+      <div class="score-label">GRIND INDEX</div>
+      <div class="score-big" id="score-big"><span id="score-num">0</span><span class="pct">/100</span></div>
+      <div class="verdict" id="verdict">START LOGGING · MOMENTUM BUILDS FROM ZERO</div>
+      <div class="streaks">
+        <div class="streak"><b id="streak-cur">0</b><span>current streak</span></div>
+        <div class="streak"><b id="streak-best">0</b><span>personal best</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 75 HARD -->
+  <section class="card pink wide">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5 17 9"/><path d="M6.5 14.5 9 17"/><path d="M4 4l4 4"/><path d="M16 16l4 4"/><path d="M2 10l12 12"/><path d="M10 2l12 12"/></svg>
+        75 HARD · Mental Toughness
+      </span>
+      <span class="tag" id="hard-status">INACTIVE</span>
+    </h2>
+    <div id="hard-body"></div>
+  </section>
+
+  <!-- WEEKLY CHART -->
+  <section class="card gold wide">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        7-Day Performance
+      </span>
+      <span class="tag">minutes · stacked</span>
+    </h2>
+    <div class="chart-wrap"><canvas id="chart"></canvas></div>
+  </section>
+
+  <!-- LOG -->
+  <section class="card orange">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Daily Journal
+      </span>
+      <span class="tag" id="log-count">0</span>
+    </h2>
+    <div class="log-explain">
+      <b>HOW IT WORKS</b> — Log any activity. Write what you did + minutes.<br>
+      The app auto-updates your goals. Examples:
+      <div style="margin-top:6px">
+        <span class="ex g">BBC podcast 30</span>
+        <span class="ex c">LeetCode 45</span>
+        <span class="ex o">TryHackMe 60</span>
+      </div>
+    </div>
+    <div class="log-input">
+      <select id="log-cat">
+        <option value="english">English</option>
+        <option value="python">Python</option>
+        <option value="pentest">Pentest</option>
+        <option value="gym">Gym</option>
+        <option value="other">Other</option>
+      </select>
+      <input id="log-note" type="text" placeholder="e.g. Practice 30 minutes" />
+      <button id="log-add">+ LOG</button>
+    </div>
+    <div class="log-list" id="log-list"></div>
+  </section>
+
+  <!-- TECH -->
+  <section class="card cyan">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        Tech Pulse
+      </span>
+      <span class="tag">hackernews</span>
+    </h2>
+    <div id="feed-tech" class="feed-scroll"><div class="feed-loading">FETCHING SIGNAL...</div></div>
+  </section>
+
+  <!-- SECURITY -->
+  <section class="card red">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        Threat Intel
+      </span>
+      <span class="tag">cves · breaches · attacks</span>
+    </h2>
+    <div id="feed-sec" class="feed-scroll"><div class="feed-loading">SCANNING...</div></div>
+  </section>
+
+  <!-- AL JAZEERA -->
+  <section class="card purple wide">
+    <h2>
+      <span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        الجزيرة · World News
+      </span>
+      <span class="tag">عاجل</span>
+    </h2>
+    <div id="feed-ar" class="feed-scroll"><div class="feed-loading">جاري التحميل...</div></div>
+  </section>
+
+</div>
+
+<div class="footer">
+  <div>GRIND MODE v4 · <b>discipline > motivation</b> · local + cloud sync</div>
+  <div>
+    <button id="drive-help-btn">? DRIVE SETUP</button>
+    <button id="export-btn" class="save">⬇ EXPORT</button>
+    <button id="import-btn" class="save">⬆ IMPORT</button>
+    <button id="reset-btn">✕ RESET</button>
+  </div>
+</div>
+<input type="file" id="import-file" accept=".json" style="display:none">
+
+<script>
+// ========== STATE ==========
+const STORAGE_KEY = 'dailyops_v2'; // keep same key — migrates v2 data
+const today = () => new Date().toISOString().slice(0, 10);
+
+const ICONS = {
+  english: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>',
+  python:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+  pentest: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  gym:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5l11 11"/><path d="M21 21l-1-1"/><path d="M3 3l1 1"/><path d="M18 22l4-4"/><path d="M2 6l4-4"/><path d="M3 10l7-7"/><path d="M14 21l7-7"/></svg>',
+};
+
+const DEFAULT_GOALS = [
+  { id: 'english', name: 'English',   sub: 'reading · listening · speaking', target: 60, unit: 'min' },
+  { id: 'python',  name: 'Python',    sub: 'code · exercises · projects',     target: 90, unit: 'min' },
+  { id: 'pentest', name: 'Pentest',   sub: 'tryhackme · htb · writeups',      target: 60, unit: 'min' },
+  { id: 'gym',     name: 'Gym',       sub: 'training session',                target: 1,  unit: 'session' },
+];
+
+const HARD_RULES = [
+  { id: 'workout1', text: 'Workout #1 (45 min)',          sub: 'indoor or outdoor' },
+  { id: 'workout2', text: 'Workout #2 (45 min · OUTDOOR)', sub: 'must be outside · any weather' },
+  { id: 'diet',     text: 'Follow your diet',             sub: 'no alcohol · no cheat meals' },
+  { id: 'water',    text: 'Drink 1 gallon water',         sub: '≈ 3.8 liters across the day' },
+  { id: 'read',     text: 'Read 10 pages',                sub: 'nonfiction · self-development' },
+  { id: 'photo',    text: 'Progress photo',               sub: 'every single day' },
+];
+
+const MOTTOS = [
+  { main: 'NO DAYS OFF.',           sub: 'your future is built today · not tomorrow' },
+  { main: 'DISCIPLINE BEATS TALENT.', sub: 'show up when you don\'t want to' },
+  { main: 'EARN IT.',                sub: 'nothing is given · everything is taken' },
+  { main: 'PAIN IS FUEL.',           sub: 'comfort is the enemy of growth' },
+  { main: 'STAY HARD.',              sub: 'the only easy day was yesterday' },
+  { main: 'BUILT NOT BORN.',         sub: 'every rep · every page · every line of code' },
+  { main: 'FOCUS > FEELINGS.',       sub: 'do the work · feelings come later' },
+  { main: 'TODAY. NOT TOMORROW.',    sub: 'tomorrow is where dreams go to die' },
+  { main: 'BE OBSESSED.',            sub: 'average effort = average life' },
+  { main: 'OUTWORK EVERYONE.',       sub: 'while they sleep · you grind' },
+];
+
+const VERDICTS = {
+  zero:    ['ZERO LOGGED. MOVE NOW.', 'THE DAY IS WAITING. 15 MINUTES. GO.', 'STOP PLANNING. START DOING.'],
+  low:     ['WEAK START. FIX IT NOW.', 'ONE SESSION FLIPS EVERYTHING.', 'YOU\'RE LOSING TIME. ATTACK.'],
+  mid:     ['KEEP PUSHING. NOT DONE YET.', 'HALFWAY IS NOT FINISHED.', 'ONE MORE BLOCK. DON\'T STOP.'],
+  high:    ['STRONG DAY. FINISH IT.', 'YOU\'RE IN THE ZONE. CLOSE IT OUT.', 'CHAMPIONS FINISH WHAT THEY START.'],
+  max:     ['ABSOLUTE UNIT.', 'THIS IS THE STANDARD. REPEAT.', 'CHAMPION MODE ACTIVATED.'],
+};
+
+let state = load();
+
+function load() {
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch(e) {}
+  try {
+    const old = localStorage.getItem('dailyops_v1');
+    if (old) {
+      const parsed = JSON.parse(old);
+      parsed.hard = parsed.hard || { active: false, startDate: null, days: {}, failed: false };
+      return parsed;
+    }
+  } catch(e) {}
+  return {
+    startDate: today(),
+    days: {},
+    goals: DEFAULT_GOALS.map(g => ({...g})),
+    streak: { current: 0, best: 0, last: null },
+    hard: { active: false, startDate: null, days: {}, failed: false },
+  };
+}
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function getDay(d = today()) {
+  if (!state.days[d]) {
+    state.days[d] = { goals: {}, pomos: 0, log: [] };
+    state.goals.forEach(g => { state.days[d].goals[g.id] = 0; });
+  }
+  return state.days[d];
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// ========== CLOCK ==========
+function tickClock() {
+  const now = new Date();
+  document.getElementById('clock-time').textContent = now.toTimeString().slice(0, 8);
+  const opts = { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' };
+  document.getElementById('date-day').textContent = now.toLocaleDateString('en-GB', opts).toUpperCase();
+  const start = new Date(state.startDate);
+  const diff = Math.floor((now - start) / 86400000) + 1;
+  document.getElementById('day-num').textContent = `DAY ${diff}`;
+}
+
+// Rotate motto every 30s
+let mottoIdx = 0;
+function rotateMotto() {
+  const m = MOTTOS[mottoIdx % MOTTOS.length];
+  const el = document.getElementById('motto');
+  el.innerHTML = `<span class="highlight">${m.main}</span><br><small>${m.sub}</small>`;
+  mottoIdx++;
+}
+rotateMotto();
+setInterval(rotateMotto, 30000);
+
+// ========== GOALS ==========
+function renderGoals() {
+  const day = getDay();
+  const wrap = document.getElementById('goals');
+  wrap.innerHTML = '';
+  let done = 0;
+  state.goals.forEach(g => {
+    const val = day.goals[g.id] || 0;
+    const pct = Math.min(100, Math.round((val / g.target) * 100));
+    const isDone = val >= g.target;
+    if (isDone) done++;
+    const step = g.unit === 'session' ? 1 : 15;
+    const el = document.createElement('div');
+    el.className = `goal ${g.id} ${isDone ? 'done' : ''}`;
+    el.innerHTML = `
+      <div class="ico">${ICONS[g.id] || ''}</div>
+      <div class="info">
+        <div class="name">${g.name}</div>
+        <div class="sub">${g.sub}</div>
+      </div>
+      <div class="controls">
+        <button data-act="dec">−</button>
+        <div class="val"><b>${val}</b>/${g.target} ${g.unit}</div>
+        <button data-act="inc">+</button>
+      </div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+    `;
+    wrap.appendChild(el);
+    el.querySelector('[data-act=inc]').addEventListener('click', () => adjustGoal(g.id, step));
+    el.querySelector('[data-act=dec]').addEventListener('click', () => adjustGoal(g.id, -step));
+  });
+  document.getElementById('goals-status').textContent = `${done}/${state.goals.length} DONE`;
+}
+function adjustGoal(id, delta) {
+  const day = getDay();
+  const before = day.goals[id] || 0;
+  const g = state.goals.find(x => x.id === id);
+  day.goals[id] = Math.max(0, before + delta);
+  // Notify when crossing the target
+  if (g && before < g.target && day.goals[id] >= g.target) {
+    toast(g.name.toUpperCase() + ' COMPLETE', `${g.target} ${g.unit} done. Keep pushing.`, '');
+  }
+  save(); render();
+}
+
+// ========== SCORE ==========
+function computeScore() {
+  const day = getDay();
+  let total = 0;
+  state.goals.forEach(g => { total += Math.min(1, (day.goals[g.id] || 0) / g.target); });
+  return Math.round((total / state.goals.length) * 100);
+}
+function renderScore() {
+  const score = computeScore();
+  document.getElementById('score-num').textContent = score;
+  const big = document.getElementById('score-big');
+  big.classList.toggle('danger-score', score < 40);
+  const v = document.getElementById('verdict');
+  v.classList.remove('good', 'bad');
+  let msg;
+  if (score === 0) msg = pick(VERDICTS.zero);
+  else if (score < 25) { msg = pick(VERDICTS.low); v.classList.add('bad'); }
+  else if (score < 60) msg = pick(VERDICTS.mid);
+  else if (score < 100) { msg = pick(VERDICTS.high); v.classList.add('good'); }
+  else { msg = pick(VERDICTS.max); v.classList.add('good'); }
+  // only change verdict text if score changed — avoid flicker
+  if (v.dataset.lastScore !== String(score)) {
+    v.textContent = msg;
+    // Fire perfect-day notification once
+    if (score === 100 && v.dataset.lastScore !== '100') {
+      toast('PERFECT DAY', 'All 4 pillars hit. This is championship mode.', 'pink');
+    }
+    v.dataset.lastScore = String(score);
+  }
+  updateStreak(score);
+}
+function updateStreak(score) {
+  const t = today();
+  if (score >= 60 && state.streak.last !== t) {
+    const y = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+    state.streak.current = state.streak.last === y ? state.streak.current + 1 : 1;
+    state.streak.last = t;
+    state.streak.best = Math.max(state.streak.best, state.streak.current);
+    save();
+  }
+  document.getElementById('streak-cur').textContent = state.streak.current;
+  document.getElementById('streak-best').textContent = state.streak.best;
+}
+
+// ========== POMODORO ==========
+let pomo = { mode: 'work', cat: 'english', running: false, remaining: 25*60, workLen: 25, breakLen: 5, interval: null };
+function pomoRender() {
+  const m = String(Math.floor(pomo.remaining / 60)).padStart(2, '0');
+  const s = String(pomo.remaining % 60).padStart(2, '0');
+  const el = document.getElementById('pomo-time');
+  el.textContent = `${m}:${s}`;
+  el.classList.toggle('running', pomo.running);
+  document.getElementById('pomo-state').textContent = pomo.running ? 'RUNNING' : 'IDLE';
+  document.getElementById('pomo-tag').textContent = pomo.mode === 'work' ? `${pomo.workLen} MIN · ${pomo.cat.toUpperCase()}` : `${pomo.breakLen} MIN BREAK`;
+  document.getElementById('pomo-start').textContent = pomo.running ? '⏸ PAUSE' : '▶ START';
+  document.getElementById('pomo-mode').textContent = `${pomo.workLen}/${pomo.breakLen}`;
+  document.getElementById('pomo-count').textContent = getDay().pomos;
+}
+function pomoTick() {
+  if (!pomo.running) return;
+  pomo.remaining--;
+  if (pomo.remaining <= 0) {
+    if (pomo.mode === 'work') {
+      const day = getDay();
+      day.pomos = (day.pomos || 0) + 1;
+      if (pomo.cat !== 'other' && day.goals[pomo.cat] !== undefined) {
+        day.goals[pomo.cat] = (day.goals[pomo.cat] || 0) + pomo.workLen;
+      }
+      day.log.unshift({ t: new Date().toISOString(), cat: pomo.cat, note: `Pomodoro +${pomo.workLen}min`, auto: true });
+      toast('SESSION DONE', `+${pomo.workLen} min dyal ${pomo.cat.toUpperCase()} · khod break ${pomo.breakLen} min`, 'cyan');
+      pomo.mode = 'break'; pomo.remaining = pomo.breakLen * 60; ping();
+    } else {
+      toast('BREAK OVER', 'Time to lock in · next session starting', 'pink');
+      pomo.mode = 'work'; pomo.remaining = pomo.workLen * 60; ping();
+    }
+    save(); render();
+  }
+  pomoRender();
+}
+function ping() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value = 880; g.gain.value = 0.15;
+    o.start(); o.stop(ctx.currentTime + 0.25);
+  } catch(e) {}
+}
+document.getElementById('pomo-start').addEventListener('click', () => {
+  pomo.running = !pomo.running;
+  if (pomo.running && !pomo.interval) pomo.interval = setInterval(pomoTick, 1000);
+  pomoRender();
+});
+document.getElementById('pomo-reset').addEventListener('click', () => {
+  pomo.running = false; pomo.mode = 'work'; pomo.remaining = pomo.workLen * 60; pomoRender();
+});
+document.getElementById('pomo-mode').addEventListener('click', () => {
+  const modes = [[25,5],[50,10],[15,3]];
+  const cur = modes.findIndex(m => m[0] === pomo.workLen);
+  const next = modes[(cur + 1) % modes.length];
+  pomo.workLen = next[0]; pomo.breakLen = next[1];
+  if (!pomo.running) pomo.remaining = pomo.workLen * 60;
+  pomoRender();
+});
+document.querySelectorAll('.pomo-cat button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.pomo-cat button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active'); pomo.cat = b.dataset.cat; pomoRender();
+  });
+});
+
+// ========== LOG ==========
+function renderLog() {
+  const day = getDay();
+  const list = document.getElementById('log-list');
+  list.innerHTML = '';
+  document.getElementById('log-count').textContent = day.log.length;
+  if (day.log.length === 0) { list.innerHTML = '<div class="feed-empty">NO ENTRIES TODAY · START LOGGING</div>'; return; }
+  day.log.forEach((e, i) => {
+    const tm = new Date(e.t).toTimeString().slice(0,5);
+    const el = document.createElement('div');
+    el.className = 'log-entry';
+    el.innerHTML = `
+      <span class="cat ${e.cat}">${e.cat}</span>
+      <div><div class="note">${escapeHtml(e.note)}</div><time>${tm}</time></div>
+      <button class="del">×</button>
+    `;
+    list.appendChild(el);
+    el.querySelector('.del').addEventListener('click', () => { day.log.splice(i, 1); save(); render(); });
+  });
+}
+document.getElementById('log-add').addEventListener('click', addLog);
+document.getElementById('log-note').addEventListener('keypress', e => { if (e.key === 'Enter') addLog(); });
+function addLog() {
+  const cat = document.getElementById('log-cat').value;
+  const note = document.getElementById('log-note').value.trim();
+  if (!note) return;
+  const day = getDay();
+  day.log.unshift({ t: new Date().toISOString(), cat, note });
+  const m = note.match(/(\d+)\s*(m|min|minutes)?/i);
+  if (m && day.goals[cat] !== undefined) {
+    const mins = parseInt(m[1]);
+    if (cat === 'gym') day.goals[cat] += 1;
+    else day.goals[cat] = (day.goals[cat] || 0) + mins;
+  }
+  document.getElementById('log-note').value = '';
+  save(); render();
+}
+
+// ========== 75 HARD ==========
+function currentHardDay() {
+  if (!state.hard.active || !state.hard.startDate) return 0;
+  return Math.floor((new Date(today()) - new Date(state.hard.startDate)) / 86400000) + 1;
+}
+function renderHard() {
+  const body = document.getElementById('hard-body');
+  const status = document.getElementById('hard-status');
+
+  if (!state.hard.active) {
+    status.textContent = 'INACTIVE';
+    body.innerHTML = `
+      <div class="hard-start">
+        <div class="big-quote">75 DAYS · NO EXCUSES</div>
+        <p>Two workouts (one outdoor). Diet. One gallon of water. Ten pages. Progress photo.<br>
+        Miss ONE rule · start from day 1. That's the deal.</p>
+        <button id="hard-start-btn">I'M IN · START NOW</button>
+      </div>`;
+    document.getElementById('hard-start-btn').addEventListener('click', () => {
+      if (confirm('Start 75 Hard today? The only way to win is to not quit.')) {
+        state.hard = { active: true, startDate: today(), days: {}, failed: false };
+        save(); render();
+      }
+    });
+    return;
+  }
+
+  const dayNum = currentHardDay();
+
+  if (state.hard.failed) {
+    status.textContent = 'FAILED';
+    body.innerHTML = `
+      <div class="hard-start">
+        <div class="big-quote" style="color:var(--red)">FAILED · DAY ${dayNum}</div>
+        <p>The challenge demands honesty. Back to day 1.<br>
+        Failure is information · not identity. Rise.</p>
+        <button id="hard-restart-btn" style="background:var(--red)">RESTART · DAY 1</button>
+      </div>`;
+    document.getElementById('hard-restart-btn').addEventListener('click', () => {
+      state.hard = { active: true, startDate: today(), days: {}, failed: false };
+      save(); render();
+    });
+    return;
+  }
+
+  if (dayNum > 75) {
+    status.textContent = 'COMPLETE';
+    body.innerHTML = `
+      <div class="hard-start">
+        <div class="big-quote" style="color:var(--lime)">75/75 · LEGENDARY</div>
+        <p>You did what 99% will never do. That's not luck. That's identity.<br>
+        Go again · or retire champion.</p>
+        <button id="hard-reset-btn" style="background:var(--lime);color:var(--bg)">RUN IT BACK</button>
+      </div>`;
+    document.getElementById('hard-reset-btn').addEventListener('click', () => {
+      if (confirm('Begin another 75 Hard cycle?')) {
+        state.hard = { active: true, startDate: today(), days: {}, failed: false };
+        save(); render();
+      }
+    });
+    return;
+  }
+
+  status.textContent = `DAY ${dayNum}/75`;
+  const t = today();
+  if (!state.hard.days[t]) state.hard.days[t] = {};
+  const todayMarks = state.hard.days[t];
+  const doneCount = HARD_RULES.filter(r => todayMarks[r.id]).length;
+  const pct = Math.round((dayNum - 1) / 75 * 100);
+  const daysLeft = 75 - dayNum + 1;
+
+  let rulesHtml = '';
+  HARD_RULES.forEach(r => {
+    const done = !!todayMarks[r.id];
+    rulesHtml += `
+      <div class="hard-rule ${done ? 'done' : ''}" data-rule="${r.id}">
+        <div class="hard-check"></div>
+        <div class="hard-rule-text">${r.text}<small>${r.sub}</small></div>
+      </div>`;
+  });
+
+  let gridHtml = '';
+  for (let i = 1; i <= 75; i++) {
+    const d = new Date(new Date(state.hard.startDate).getTime() + (i-1) * 86400000).toISOString().slice(0,10);
+    const marks = state.hard.days[d] || {};
+    const doneAll = HARD_RULES.every(r => marks[r.id]);
+    const anyDone = HARD_RULES.some(r => marks[r.id]);
+    const isPast = i < dayNum;
+    const isToday = i === dayNum;
+    let cls = 'hard-cell';
+    if (doneAll) cls += ' done';
+    else if (isPast) cls += ' fail';
+    else if (isToday && anyDone) cls += ' partial';
+    if (isToday) cls += ' today';
+    gridHtml += `<div class="${cls}" title="Day ${i} — ${d}"></div>`;
+  }
+
+  body.innerHTML = `
+    <div class="hard-header">
+      <div class="hard-day">${dayNum}<small>/75</small></div>
+      <div class="hard-progress">
+        <div class="hard-pbar-label">${pct}% COMPLETE · ${doneCount}/6 TODAY · ${daysLeft} DAYS LEFT</div>
+        <div class="hard-pbar"><i style="width:${pct}%"></i></div>
+      </div>
+      <div class="hard-motto">STAY<br>HARD</div>
+    </div>
+    <div class="hard-rules-wrap">${rulesHtml}</div>
+    <div class="hard-grid">${gridHtml}</div>
+    <div class="hard-actions">
+      <button id="hard-fail" class="danger">✕ I FAILED · RESTART</button>
+      <button id="hard-quit">QUIT CHALLENGE</button>
+    </div>`;
+
+  document.querySelectorAll('.hard-rule').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.rule;
+      todayMarks[id] = !todayMarks[id];
+      save(); renderHard();
+    });
+  });
+  document.getElementById('hard-fail').addEventListener('click', () => {
+    if (confirm(`Restart from day 1? You were on day ${dayNum}.`)) {
+      state.hard.failed = true; save(); renderHard();
+    }
+  });
+  document.getElementById('hard-quit').addEventListener('click', () => {
+    if (confirm('Abandon 75 Hard? All progress will be cleared.')) {
+      state.hard = { active: false, startDate: null, days: {}, failed: false };
+      save(); renderHard();
+    }
+  });
+}
+
+// ========== CHART ==========
+let chart = null;
+function renderChart() {
+  const labels = [];
+  const data = { english: [], python: [], pentest: [], gym: [] };
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000);
+    const key = d.toISOString().slice(0,10);
+    labels.push(d.toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase());
+    const day = state.days[key] || { goals: {} };
+    data.english.push(day.goals.english || 0);
+    data.python.push(day.goals.python || 0);
+    data.pentest.push(day.goals.pentest || 0);
+    data.gym.push((day.goals.gym || 0) * 45);
+  }
+  const ds = [
+    { label: 'ENGLISH', data: data.english, backgroundColor: '#ffb800', borderWidth: 0 },
+    { label: 'PYTHON',  data: data.python,  backgroundColor: '#00e5ff', borderWidth: 0 },
+    { label: 'PENTEST', data: data.pentest, backgroundColor: '#ff6a00', borderWidth: 0 },
+    { label: 'GYM',     data: data.gym,     backgroundColor: '#ff2d95', borderWidth: 0 },
+  ];
+  const ctx = document.getElementById('chart').getContext('2d');
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: ds },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true, ticks: { color: '#b8b8cc', font: { family: 'Archivo Black', size: 12 } }, grid: { color: '#26263a' } },
+        y: { stacked: true, ticks: { color: '#6a6a80', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: '#26263a' } },
+      },
+      plugins: {
+        legend: { labels: { color: '#ffffff', font: { family: 'Archivo Black', size: 11 }, usePointStyle: true, padding: 16 } },
+        tooltip: { backgroundColor: '#0a0a0f', borderColor: '#d4ff00', borderWidth: 1, titleFont: { family: 'Archivo Black' }, bodyFont: { family: 'JetBrains Mono' } }
+      }
+    }
+  });
+}
+
+// ========== FEEDS ==========
+async function loadTechFeed() {
+  const wrap = document.getElementById('feed-tech');
+  try {
+    const ids = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json').then(r => r.json());
+    const stories = await Promise.all(ids.slice(0, 25).map(id =>
+      fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json())
+    ));
+    const kw = /python|ai|llm|ml|linux|code|programming|developer|open.source|api|github/i;
+    const filtered = stories.filter(s => s && s.title && (kw.test(s.title) || s.score > 300)).slice(0, 10);
+    if (!filtered.length) { wrap.innerHTML = '<div class="feed-empty">NO SIGNAL</div>'; return; }
+    wrap.innerHTML = '';
+    filtered.forEach(s => {
+      const tag = /python/i.test(s.title) ? 'PY' : /ai|llm|ml/i.test(s.title) ? 'AI' : /linux/i.test(s.title) ? 'LNX' : 'TECH';
+      const el = document.createElement('div');
+      el.className = 'feed-item';
+      el.innerHTML = `
+        <span class="feed-src">${tag}</span>
+        <div>
+          <div class="feed-title"><a href="${s.url || 'https://news.ycombinator.com/item?id=' + s.id}" target="_blank" rel="noopener">${escapeHtml(s.title)}</a></div>
+          <div class="feed-meta">↑${s.score} · ${s.descendants || 0}💬 · HN</div>
+        </div>`;
+      wrap.appendChild(el);
+    });
+  } catch(e) { wrap.innerHTML = '<div class="feed-empty">FEED OFFLINE</div>'; }
+}
+
+async function fetchRSS(url) {
+  const proxies = [
+    (u) => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}&count=15`,
+    (u) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+    (u) => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+  ];
+  let lastErr;
+  for (let i = 0; i < proxies.length; i++) {
+    try {
+      const r = await fetch(proxies[i](url));
+      if (!r.ok) throw new Error('http ' + r.status);
+      if (i === 0) {
+        const data = await r.json();
+        if (data.status !== 'ok') throw new Error(data.message || 'feed error');
+        return data.items || [];
+      } else {
+        let xmlText;
+        if (i === 1) { const j = await r.json(); xmlText = j.contents; }
+        else { xmlText = await r.text(); }
+        return parseRSSXml(xmlText);
+      }
+    } catch (e) { lastErr = e; }
+  }
+  throw lastErr || new Error('all proxies failed');
+}
+function parseRSSXml(xml) {
+  const doc = new DOMParser().parseFromString(xml, 'text/xml');
+  const items = [...doc.querySelectorAll('item, entry')].map(it => {
+    const get = (sel) => { const n = it.querySelector(sel); return n ? n.textContent.trim() : ''; };
+    let link = get('link');
+    if (!link) { const a = it.querySelector('link'); if (a) link = a.getAttribute('href') || ''; }
+    return {
+      title: get('title'), link,
+      pubDate: get('pubDate') || get('published') || get('updated') || '',
+      description: get('description') || get('summary') || '',
+    };
+  });
+  return items;
+}
+
+async function loadSecurityFeed() {
+  const wrap = document.getElementById('feed-sec');
+  const sources = [
+    { url: 'https://feeds.feedburner.com/TheHackersNews', tag: 'THN' },
+    { url: 'https://www.bleepingcomputer.com/feed/',     tag: 'BLP' },
+    { url: 'https://krebsonsecurity.com/feed/',          tag: 'KOS' },
+  ];
+  try {
+    const all = [];
+    for (const src of sources) {
+      try {
+        const items = await fetchRSS(src.url);
+        items.slice(0, 6).forEach(i => all.push({ ...i, src: src.tag }));
+      } catch(e) {}
+    }
+    if (!all.length) { wrap.innerHTML = '<div class="feed-empty">FEED OFFLINE</div>'; return; }
+    all.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+    wrap.innerHTML = '';
+    all.slice(0, 12).forEach(s => {
+      const date = s.pubDate ? new Date(s.pubDate).toLocaleDateString('en-GB') : '';
+      const el = document.createElement('div');
+      el.className = 'feed-item';
+      el.innerHTML = `
+        <span class="feed-src sec">${s.src}</span>
+        <div>
+          <div class="feed-title"><a href="${s.link}" target="_blank" rel="noopener">${escapeHtml(s.title)}</a></div>
+          <div class="feed-meta">${date} · CYBERSEC</div>
+        </div>`;
+      wrap.appendChild(el);
+    });
+  } catch(e) { wrap.innerHTML = '<div class="feed-empty">FEED OFFLINE</div>'; }
+}
+
+async function loadArabicFeed() {
+  const wrap = document.getElementById('feed-ar');
+  const sources = [
+    { url: 'https://www.aljazeera.net/aljazeerarss/4f51f922-a40b-4cbb-a6b0-a20452c37f87/0be25b7d-f37c-4c01-9063-f879dff9e545', tag: 'الجزيرة' },
+    { url: 'https://www.aljazeera.net/xml/rss/all.xml', tag: 'الجزيرة' },
+    { url: 'https://feeds.bbci.co.uk/arabic/rss.xml', tag: 'BBC' },
+    { url: 'https://arabic.rt.com/rss/', tag: 'RT' },
+    { url: 'https://arabic.cnn.com/api/v1/rss/rss.xml', tag: 'CNN' },
+  ];
+  let items = []; let usedTag = 'خبر';
+  for (const src of sources) {
+    try {
+      const got = await fetchRSS(src.url);
+      if (got && got.length) { items = got; usedTag = src.tag; break; }
+    } catch(e) {}
+  }
+  if (!items.length) { wrap.innerHTML = '<div class="feed-empty">تعذّر تحميل الأخبار</div>'; return; }
+  wrap.innerHTML = '';
+  items.slice(0, 14).forEach(s => {
+    const date = s.pubDate ? new Date(s.pubDate).toLocaleDateString('ar') : '';
+    const el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = `
+      <span class="feed-src ar">${usedTag}</span>
+      <div style="flex:1">
+        <div class="feed-title ar"><a href="${s.link}" target="_blank" rel="noopener">${escapeHtml(s.title)}</a></div>
+        <div class="feed-meta" style="text-align:right;direction:rtl">${date}</div>
+      </div>`;
+    wrap.appendChild(el);
+  });
+}
+
+// ========== TOASTS + NOTIFICATIONS ==========
+function toast(title, body, variant = '') {
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = 'toast ' + variant;
+  el.innerHTML = `<div class="toast-title">${escapeHtml(title)}</div><div class="toast-body">${escapeHtml(body)}</div>`;
+  wrap.appendChild(el);
+  setTimeout(() => { el.classList.add('closing'); setTimeout(() => el.remove(), 300); }, 5000);
+  // Also fire browser notification if granted
+  if ('Notification' in window && Notification.permission === 'granted') {
+    try { new Notification(title, { body, icon: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23d4ff00"/><text x="50" y="72" text-anchor="middle" font-size="72" font-family="Arial Black" fill="%230a0a0f">M</text></svg>' }); } catch(e) {}
+  }
+}
+
+document.getElementById('notif-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('notif-btn');
+  if (!('Notification' in window)) { toast('NOT SUPPORTED', 'Browser dyalek ma kay-supportich notifications'); return; }
+  if (Notification.permission === 'granted') {
+    btn.classList.add('enabled');
+    btn.textContent = '🔔 Notifications ON';
+    toast('READY', 'Notifications ndi3fo — ghadi twsel mnin yentahi pomodoro wla day complete', 'cyan');
+    return;
+  }
+  const p = await Notification.requestPermission();
+  if (p === 'granted') {
+    btn.classList.add('enabled');
+    btn.textContent = '🔔 Notifications ON';
+    toast('ACTIVATED', 'M3awd ghadi twsel notifications f les moments mouhimin', 'cyan');
+  } else {
+    toast('DENIED', 'Bghiti t-l7aqhom, dir allow f browser settings');
+  }
+});
+// auto-update button state
+if ('Notification' in window && Notification.permission === 'granted') {
+  const b = document.getElementById('notif-btn');
+  b.classList.add('enabled'); b.textContent = '🔔 Notifications ON';
+}
+
+// ========== MUSIC PLAYER (YouTube iframe approach via hidden iframe) ==========
+// Using curated 24/7 live lofi/focus streams that work without auth
+const MUSIC_TRACKS = {
+  lofi: [
+    { name: 'LOFI GIRL · 24/7', desc: 'Beats to study/relax to', videoId: 'jfKfPfyJRdk' },
+    { name: 'CHILLED COW 2', desc: 'Sleepy chill hip-hop', videoId: 'rUxyKA_-grg' },
+    { name: 'JAZZ HOP CAFE', desc: 'Chill jazz beats', videoId: '-5KAN9_CzSA' },
+  ],
+  binaural: [
+    { name: '40HZ GAMMA', desc: 'Deep focus · concentration', videoId: 'kAvaQBj9l4I' },
+    { name: 'ALPHA WAVES', desc: 'Relaxed alertness', videoId: 'WPni755-Krg' },
+    { name: 'STUDY FOCUS', desc: 'Binaural beats for work', videoId: '8plIMKlSdpM' },
+  ],
+  nature: [
+    { name: 'RAIN 24/7', desc: 'Heavy rain · thunder', videoId: 'mPZkdNFkNps' },
+    { name: 'FOREST', desc: 'Birds · wind · peace', videoId: 'xNN7iTA57jM' },
+    { name: 'OCEAN WAVES', desc: 'Beach sounds · calm', videoId: 'bn9F19Hi1Lk' },
+  ],
+};
+
+let music = { mood: 'lofi', idx: 0, playing: false, volume: 50, iframe: null };
+
+function musicRender() {
+  const list = MUSIC_TRACKS[music.mood];
+  const t = list[music.idx];
+  document.getElementById('music-track').textContent = t.name;
+  document.getElementById('music-desc').textContent = t.desc;
+  document.getElementById('music-state').textContent = music.playing ? 'PLAYING' : 'PAUSED';
+  document.getElementById('music-play').textContent = music.playing ? '⏸ PAUSE' : '▶ PLAY';
+  document.getElementById('music-viz').classList.toggle('playing', music.playing);
+}
+function loadTrack() {
+  // remove old iframe if any
+  if (music.iframe) { music.iframe.remove(); music.iframe = null; }
+  if (!music.playing) return;
+  const t = MUSIC_TRACKS[music.mood][music.idx];
+  const iframe = document.createElement('iframe');
+  iframe.id = 'yt-player';
+  iframe.width = '0'; iframe.height = '0';
+  iframe.style.cssText = 'position:absolute;left:-9999px;top:-9999px;border:0;';
+  iframe.allow = 'autoplay';
+  iframe.src = `https://www.youtube.com/embed/${t.videoId}?autoplay=1&controls=0&mute=0&enablejsapi=1`;
+  document.body.appendChild(iframe);
+  music.iframe = iframe;
+}
+document.querySelectorAll('.music-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.music-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    music.mood = tab.dataset.mood; music.idx = 0;
+    if (music.playing) loadTrack();
+    musicRender();
+  });
+});
+document.getElementById('music-play').addEventListener('click', () => {
+  music.playing = !music.playing;
+  loadTrack();
+  musicRender();
+  if (music.playing) toast('FOCUS ON', MUSIC_TRACKS[music.mood][music.idx].name, 'pink');
+});
+document.getElementById('music-next').addEventListener('click', () => {
+  const list = MUSIC_TRACKS[music.mood];
+  music.idx = (music.idx + 1) % list.length;
+  if (music.playing) loadTrack();
+  musicRender();
+});
+document.getElementById('music-prev').addEventListener('click', () => {
+  const list = MUSIC_TRACKS[music.mood];
+  music.idx = (music.idx - 1 + list.length) % list.length;
+  if (music.playing) loadTrack();
+  musicRender();
+});
+document.getElementById('music-vol').addEventListener('input', (e) => {
+  music.volume = parseInt(e.target.value);
+  // Volume control requires YouTube Iframe API — for simplicity we rely on browser mute/system volume
+});
+musicRender();
+
+// ========== GOOGLE DRIVE SYNC ==========
+// Uses Google Identity Services + Drive appData scope (file only visible to this app)
+// Requires a Google Cloud OAuth Client ID — user provides theirs via prompt
+const GDRIVE_FILENAME = 'grindmode-data.json';
+let gdrive = { token: null, fileId: null, clientId: localStorage.getItem('gdrive_client_id') || '' };
+
+function setSyncStatus(text, cls) {
+  const el = document.getElementById('sync-status');
+  el.textContent = text;
+  el.className = cls || '';
+}
+
+async function gdriveInit() {
+  if (!gdrive.clientId) {
+    const id = prompt('Paste dyalek Google OAuth Client ID (ghadi ndir gh setup b zaf ghir m3ak ·  see instructions below):');
+    if (!id) return false;
+    gdrive.clientId = id.trim();
+    localStorage.setItem('gdrive_client_id', gdrive.clientId);
+  }
+  if (!window.google || !google.accounts) {
+    // load Google Identity Services library
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  return new Promise((resolve) => {
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: gdrive.clientId,
+      scope: 'https://www.googleapis.com/auth/drive.appdata',
+      callback: (resp) => {
+        if (resp.error) { setSyncStatus('☁ Auth failed', 'error'); resolve(false); return; }
+        gdrive.token = resp.access_token;
+        resolve(true);
+      },
+    });
+    tokenClient.requestAccessToken();
+  });
+}
+
+async function gdriveFindFile() {
+  const r = await fetch(`https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27${GDRIVE_FILENAME}%27`, {
+    headers: { Authorization: 'Bearer ' + gdrive.token }
+  });
+  const data = await r.json();
+  if (data.files && data.files.length) { gdrive.fileId = data.files[0].id; return true; }
+  return false;
+}
+
+async function gdriveUpload() {
+  const body = JSON.stringify(state);
+  const metadata = { name: GDRIVE_FILENAME, parents: gdrive.fileId ? undefined : ['appDataFolder'] };
+  const boundary = 'boundary' + Date.now();
+  const delim = '\r\n--' + boundary + '\r\n';
+  const closeDelim = '\r\n--' + boundary + '--';
+  const multipartBody =
+    delim + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
+    delim + 'Content-Type: application/json\r\n\r\n' + body + closeDelim;
+
+  const url = gdrive.fileId
+    ? `https://www.googleapis.com/upload/drive/v3/files/${gdrive.fileId}?uploadType=multipart`
+    : `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
+  const method = gdrive.fileId ? 'PATCH' : 'POST';
+
+  const r = await fetch(url, {
+    method,
+    headers: { Authorization: 'Bearer ' + gdrive.token, 'Content-Type': 'multipart/related; boundary=' + boundary },
+    body: multipartBody,
+  });
+  if (!r.ok) throw new Error('upload failed');
+  const data = await r.json();
+  if (data.id) gdrive.fileId = data.id;
+  return true;
+}
+
+async function gdriveDownload() {
+  if (!gdrive.fileId) return null;
+  const r = await fetch(`https://www.googleapis.com/drive/v3/files/${gdrive.fileId}?alt=media`, {
+    headers: { Authorization: 'Bearer ' + gdrive.token }
+  });
+  if (!r.ok) throw new Error('download failed');
+  return await r.json();
+}
+
+async function syncNow() {
+  try {
+    setSyncStatus('☁ Syncing...', 'syncing');
+    if (!gdrive.token) {
+      const ok = await gdriveInit();
+      if (!ok) { setSyncStatus('☁ Not synced', ''); return; }
+    }
+    await gdriveFindFile();
+    const remote = gdrive.fileId ? await gdriveDownload() : null;
+    // Merge strategy: use the version with more recent lastSync, or merge days
+    const localTime = state.lastSync || 0;
+    const remoteTime = (remote && remote.lastSync) || 0;
+    if (remote && remoteTime > localTime) {
+      // pull remote → merge days locally (preserve unsync'd local changes)
+      const merged = mergeStates(state, remote);
+      state = merged;
+    }
+    state.lastSync = Date.now();
+    await gdriveUpload();
+    save();
+    render();
+    setSyncStatus('☁ Synced ' + new Date().toTimeString().slice(0,5), 'synced');
+    document.getElementById('sync-btn').classList.add('synced');
+    toast('SYNCED', 'Data dyalek mefhouma f Google Drive · accessible mn koul ajhizatek', 'cyan');
+  } catch (e) {
+    console.error(e);
+    setSyncStatus('☁ Sync failed', 'error');
+    toast('SYNC FAILED', e.message || 'Check dyal Client ID wla connection');
+  }
+}
+
+function mergeStates(local, remote) {
+  const out = { ...remote };
+  out.days = { ...(remote.days || {}), ...(local.days || {}) };
+  // For today specifically: take max of each goal value
+  const t = today();
+  if (local.days && local.days[t] && remote.days && remote.days[t]) {
+    const lg = local.days[t].goals || {};
+    const rg = remote.days[t].goals || {};
+    out.days[t] = {
+      goals: {},
+      pomos: Math.max(local.days[t].pomos || 0, remote.days[t].pomos || 0),
+      log: [...(local.days[t].log || []), ...(remote.days[t].log || [])]
+        .filter((v, i, a) => a.findIndex(x => x.t === v.t && x.note === v.note) === i)
+        .sort((a, b) => new Date(b.t) - new Date(a.t)),
+    };
+    const keys = new Set([...Object.keys(lg), ...Object.keys(rg)]);
+    keys.forEach(k => { out.days[t].goals[k] = Math.max(lg[k] || 0, rg[k] || 0); });
+  }
+  out.streak = (local.streak && (local.streak.best > (remote.streak?.best || 0))) ? local.streak : (remote.streak || local.streak);
+  out.hard = (local.hard && local.hard.active) ? local.hard : (remote.hard || local.hard);
+  return out;
+}
+
+document.getElementById('sync-btn').addEventListener('click', syncNow);
+
+// Auto-sync every 5 min if authorized, and on important events
+setInterval(() => { if (gdrive.token) syncNow(); }, 5 * 60 * 1000);
+window.addEventListener('beforeunload', () => { if (gdrive.token) { navigator.sendBeacon && save(); } });
+document.getElementById('export-btn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `grindmode-${today()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (confirm('Wipe all data? This cannot be undone.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+});
+
+// Import JSON
+document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+document.getElementById('import-file').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (confirm('Overwrite current data with imported file?')) {
+        state = data;
+        save();
+        render();
+        toast('IMPORTED', 'Data restored from backup', 'cyan');
+      }
+    } catch (err) { toast('INVALID FILE', 'Not a valid backup JSON'); }
+  };
+  reader.readAsText(f);
+});
+
+// Drive setup help
+document.getElementById('drive-help-btn').addEventListener('click', () => {
+  const help = `GOOGLE DRIVE SYNC — Setup (once, 5 min):
+
+1. Go to https://console.cloud.google.com
+2. Create a new project (any name)
+3. APIs & Services → Library → enable "Google Drive API"
+4. APIs & Services → Credentials → "Create Credentials" → OAuth client ID
+   - Application type: Web application
+   - Authorized JavaScript origins: add the URL where you run this file
+     (e.g. https://yourname.github.io  OR  http://localhost
+      OR  file:// is NOT allowed — you must host the HTML)
+5. Copy the Client ID (ends with .apps.googleusercontent.com)
+6. Click "⟲ Sync" button — paste the Client ID when prompted
+7. Sign in with your Google account
+
+After setup: data auto-syncs every 5 min between ALL your devices.
+On phone: open same file URL, paste same Client ID, sign in.
+
+Want easier alternative? Use ⬇ EXPORT on PC, email JSON to yourself,
+⬆ IMPORT on phone (works but manual).`;
+  alert(help);
+});
+
+// ========== RENDER + LIVE ==========
+function render() {
+  renderGoals(); renderScore(); renderLog(); renderChart(); renderHard(); pomoRender();
+}
+render();
+tickClock();
+loadTechFeed(); loadSecurityFeed(); loadArabicFeed();
+
+const FEED_REFRESH_MS = 3 * 60 * 1000;
+let nextFeedRefresh = Date.now() + FEED_REFRESH_MS;
+let currentDayKey = today();
+
+function refreshFeeds() {
+  loadTechFeed(); loadSecurityFeed(); loadArabicFeed();
+  nextFeedRefresh = Date.now() + FEED_REFRESH_MS;
+}
+function updateRefreshCountdown() {
+  const ms = Math.max(0, nextFeedRefresh - Date.now());
+  const m = Math.floor(ms / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  const el = document.getElementById('refresh-countdown');
+  if (el) el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (ms <= 0) refreshFeeds();
+}
+setInterval(() => {
+  const t = today();
+  if (t !== currentDayKey) { currentDayKey = t; render(); }
+  tickClock();
+  updateRefreshCountdown();
+}, 1000);
+setInterval(() => render(), 30000); // lighter re-render every 30s
+document.getElementById('refresh-now').addEventListener('click', () => {
+  const btn = document.getElementById('refresh-now');
+  btn.textContent = '↻ ...';
+  refreshFeeds();
+  setTimeout(() => { btn.textContent = '↻ Now'; }, 1000);
+});
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) { render(); refreshFeeds(); }
+});
+</script>
+</body>
+</html>
